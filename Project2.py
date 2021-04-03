@@ -5,6 +5,7 @@ import os
 import csv
 import unittest
 
+#Rohan Erasala (rerasala) and Vineet Raju (vkraju)
 
 def get_titles_from_search_results(filename):
     """
@@ -306,10 +307,6 @@ class TestCases(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    get_titles_from_search_results('search_results.htm')
-    get_search_links()
-    get_book_summary(get_search_links()[0])
-    # print(extra_credit("extra_credit.htm"))
     unittest.main(verbosity=2)
 
 
