@@ -106,6 +106,19 @@ def summarize_best_books(filepath):
     ("Fiction", "The Testaments (The Handmaid's Tale, #2)", "https://www.goodreads.com/choiceawards/best-fiction-books-2020") 
     to your list of tuples.
     """
+    summarized = []
+
+    with open(filepath, 'r', encoding = "utf8") as encoder:
+        soup = BeautifulSoup(str(encoder.read()), 'html.parser')
+
+    for x in soup.findAll('div', {'class':'category clearFix'}):
+        nextUrl = x.find('a').get('href').replace('/n','')
+        category = x.find('a').find('h4').text.strip()
+        title = x.find('img', {"class":"category_winnerImage"}).get('alt').strip()
+        summarized.append((str(category),str(title),str(nextUrl)))
+
+    return summarized
+        
 
 
     
@@ -131,6 +144,15 @@ def write_csv(data, filename):
 
     This function should not return anything.
     """
+    with open(filename, 'w', newline='') as csvfile:
+        entries = ['Book title','Author Name']
+        book = csv.DictWriter(csvfile, entries = entries)
+        book.writeheader()
+        for line in page:
+            print(line)
+            book.writerow({'Book title': line[0], 'Author Name': line[1]})
+
+
 
 
 def extra_credit(filepath):
@@ -197,7 +219,7 @@ class TestCases(unittest.TestCase):
             self.assertEqual("https://www.goodreads.com/book/show/" in el, True)
 
 
-    def test_get_book_summary(self):
+    ..............def test_get_book_summary(self):
         # create a local variable – summaries – a list containing the results from get_book_summary()
 
         summaries = []
